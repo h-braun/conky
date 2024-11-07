@@ -1,37 +1,44 @@
-This conky config files should serve as a template. Think of it as a type of boilerplate code or inspiration for your own personal configuration. 
+These Conky configuration files are designed to serve as a template. A starting point or inspiration for creating your own personalized configuration.
 
-It is nearly impossible to create a config file which will serve everyone. You are free to make any change you see fit for your use case. You can get more information at the [conky documentation site](https://conky.sourceforge.net/documentation.html).
+It’s challenging to create a one-size-fits-all configuration that meets everyone’s needs, so feel free to modify anything to suit your own setup. You can find additional information in the Conky documentation.
 
-**Notice**: This configuration files were created with Linux Mint 21.3 under kernel 5.15.0
+**Note:** These configuration files were created using Linux Mint 21.3 with kernel 5.15.0.
 
 
 # How to use
-Copy the `.conf` file into `~/.config/conky/` and try it out with `conky -c ~/.config/conky/programmer.conf`
+Copy the `.conf` file into `~/.config/conky/` and test it by running:
+```
+conky -c ~/.config/conky/programmer.conf
+```
 
 # Requirements
-To use this config file you first need to install [conky](https://github.com/brndnmtthws/conky). The font used in this config is `DejaVu Sans Mono`.
+To use this configuration file, you’ll need to install [conky](https://github.com/brndnmtthws/conky). This config also requires the font `DejaVu Sans Mono`.
 
-The config files in this repo were used with a NVidia graphics card and an AMD Ryzen CPU. 
+The configurations in this repository were tested with an NVIDIA graphics card and an AMD Ryzen CPU.
 
 ### Graphics card
-Make sure that `nvidia-smi` is installed. This provides the necessary data for GPU temperature and wattage.
+
+#### NVidia
+Ensure `nvidia-smi is` installed to provide GPU temperature and wattage data.
+
+
+Currently, I have not tested this with an AMD graphics card.
 
 ### CPU
-The values for CPU temperature and fan rmp are delivered through hwmon. There are multiple ways to find out what source delivers the needed value.
+CPU temperature and fan speed are sourced from `hwmon`. There are multiple ways to find which source provides these values.
 
-Try this command to find temp/fan and Voltage for you CPU
+Run the following command to locate temperature, fan speed, and voltage data for your CPU:
 ```
 find /sys/devices/platform/ -iname '*input'
 ```
 
-You can use [`xsensors`](https://community.linuxmint.com/software/view/xsensors) if you want to check the values with a GUI.
-In my case the pattern for the CPU fan is `hwmon 1 fan 2`. The temperature would be `hwmon 1 temp 2` for a AMD Ryzen 7 3700X.
+You can also use [`xsensors`](https://community.linuxmint.com/software/view/xsensors) to check these values through a GUI. 
+For example, with an AMD Ryzen 7 3700X, the CPU fan might be labeled as `hwmon 1 fan 2` and temperature as `hwmon 1 temp 2`.
 
 ### Network
-You have to change the network interface in the configuration file with the network interface of **your machine**. Try to find 
-your specific network adaper with 
+Update the network interface in the configuration file to match your system’s network adapter. To identify your specific network adapter, use:
 ```
 ifconfig
 ```
 
-The most common pattern for ethernet adapaters is `enpXXs0`. In my case it is `wlp37s0` for a wifi adapter.
+Ethernet adapters typically follow the pattern `enpXXs0`. In this example, `wlp37s0` is used for a Wi-Fi adapter.
