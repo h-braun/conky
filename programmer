@@ -1,0 +1,97 @@
+conky.config = {
+    alignment = 'top_right',
+    background = true,
+    double_buffer = true,
+    font = 'DejaVu Sans Mono:size=10',
+    gap_x = 20,
+    gap_y = 10,
+    own_window = true,
+    own_window_type = 'desktop',
+    own_window_transparent = false,
+    own_window_colour = '#000000',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = no,
+    top_cpu_separate = false,
+    update_interval = 2,
+    use_xft = true,
+    xftalpha = 0.8,
+    border_inner_margin = 5,
+    border_outer_margin = 0,
+    minimum_width = 400,
+    maximum_width = 600,
+    draw_shades = false,
+    default_color = 'white',
+    temperature_unit = 'celsius',
+    cpu_avg_samples = 2,
+    diskio_avg_samples = 10,
+}
+
+conky.text = [[
+${color #00FF00}SYSTEM INFO
+${hr}
+Hostname: ${alignr}${nodename}
+Kernel: ${alignr}${kernel}
+Uptime: ${alignr}${uptime}
+
+${alignc}${time %A, %d %B %Y}
+${alignc}${time %H:%M}
+
+${color #00FF00}CPU INFO
+${hr}
+CPU:      ${hwmon 1 temp 2}°C ${alignr}${hwmon 1 fan 2}rpm
+SYS:      ${hwmon 1 temp 1}°C ${alignr}${hwmon 1 fan 5}rpm / ${hwmon 1 fan 3}rpm
+SM_BUS:   ${hwmon 1 temp 7}°C ${alignr}${hwmon 1 fan 6}rpm
+
+${freq_g} GHz${alignr}${cpu cpu0}%
+${cpugraph cpu0 30,${conky_window.width} 00FF00 FF0000 -t}
+Number of Processes: ${alignr}${processes}
+Number of Threads: ${alignr}${threads}
+
+${goto 240}PID      CPU     MEM
+${top name 1} ${alignr}${top pid 1} ${top cpu 1}% ${top mem 1}%
+${top name 2} ${alignr}${top pid 2} ${top cpu 2}% ${top mem 2}%
+${top name 3} ${alignr}${top pid 3} ${top cpu 3}% ${top mem 3}%
+${top name 4} ${alignr}${top pid 4} ${top cpu 4}% ${top mem 4}%
+${top name 5} ${alignr}${top pid 5} ${top cpu 5}% ${top mem 5}%
+
+${color #00FF00}GPU INFO
+${hr}
+GPU Temp: ${execi 10 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader}°C ${alignr}Power Usage: ${execi 10 nvidia-smi --query-gpu=power.draw --format=csv,noheader}
+
+${color #00FF00}MEMORY
+${hr}
+Used (${memperc}%)${goto 150}Free${goto 300}Total
+$mem${goto 150}$memeasyfree${goto 300}$memmax
+
+${goto 240}PID      CPU     MEM
+${top_mem name 1} ${alignr}${top_mem pid 1} ${top_mem cpu 1}% ${top_mem mem 1}%
+${top_mem name 2} ${alignr}${top_mem pid 2} ${top_mem cpu 2}% ${top_mem mem 2}%
+${top_mem name 3} ${alignr}${top_mem pid 3} ${top_mem cpu 3}% ${top_mem mem 3}%
+
+${color #00FF00}DISK USAGE
+${hr}
+${execi 3600 df -h --output=target,size,used -x tmpfs -x devtmpfs | grep -v '/boot/efi'}
+
+Name${goto 120}read${goto 200}${alignr}write
+/${goto 120}${diskiograph_read /dev/nvme0n1p2 15,70 -l} ${diskio_read /dev/nvme0n1p2}${goto 200}${alignr}${diskio_write /dev/nvme0n1p2} ${diskiograph_write /dev/nvme0n1p2 15,70 -l}
+/home${goto 120}${diskiograph_read /dev/sda1 15,70 -l} ${diskio_read /dev/sda1}${goto 200}${alignr}${diskio_write /dev/sda1} ${diskiograph_write /dev/sda1 15,70 -l}
+
+${color #00FF00}NETWORK
+${hr}
+${if_up wlp37s0}
+SSID: ${alignr}${wireless_essid wlp37s0}
+Rate: ${wireless_bitrate wlp37s0} ${alignr}Signal: ${wireless_link_qual wlp37s0}/${wireless_link_qual_max wlp37s0}(${wireless_link_qual_perc wlp37s0}%)
+${wireless_link_bar wlp37s0}
+Download ${alignr}${downspeed wlp37s0}
+${downspeedgraph wlp37s0 30,${conky_window.width} 0000FF 0000FF -t}
+Upload ${alignr}${upspeed wlp37s0}
+${upspeedgraph wlp37s0 30,${conky_window.width} FF0000 FF0000 -t}
+
+Total Download: ${alignr}${totaldown wlp37s0}
+Total Upload: ${alignr}${totalup wlp37s0}
+IP: ${alignr}${addr wlp37s0}
+MAC: ${alignr}${wireless_ap wlp37s0}
+${else}
+Network Interface: Not Connected
+${endif}
+]]
