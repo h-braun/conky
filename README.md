@@ -16,14 +16,6 @@ To use this configuration file, you’ll need to install [conky](https://github.
 
 The configurations in this repository were tested with an NVIDIA graphics card and an AMD Ryzen CPU.
 
-### Graphics card
-
-#### NVidia
-Ensure `nvidia-smi is` installed to provide GPU temperature and wattage data.
-
-
-Currently, I have not tested this with an AMD graphics card.
-
 ### CPU
 CPU temperature and fan speed are sourced from `hwmon`. There are multiple ways to find which source provides these values.
 
@@ -34,6 +26,14 @@ find /sys/devices/platform/ -iname '*input'
 
 You can also use [`xsensors`](https://community.linuxmint.com/software/view/xsensors) to check these values through a GUI. 
 For example, with an AMD Ryzen 7 3700X, the CPU fan might be labeled as `hwmon 1 fan 2` and temperature as `hwmon 1 temp 2`.
+
+### Graphics card
+
+#### NVidia
+Ensure `nvidia-smi is` installed to provide GPU temperature and wattage data.
+
+
+Currently, I have not tested this with an AMD graphics card.
 
 ### Network
 Update the network interface in the configuration file to match your system’s network adapter. To identify your specific network adapter, use:
