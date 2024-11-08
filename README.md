@@ -30,7 +30,7 @@ For example, with an AMD Ryzen 7 3700X, the CPU fan might be labeled as `hwmon 1
 ### Graphics card
 
 #### NVidia
-Ensure `nvidia-smi is` installed to provide GPU temperature and wattage data.
+Ensure `nvidia-smi` is installed to provide GPU temperature and wattage data.
 
 
 Currently, I have not tested this with an AMD graphics card.
